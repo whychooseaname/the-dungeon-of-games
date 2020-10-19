@@ -1,3 +1,6 @@
 # the-dungeon-of-games
 Mod 3 Project Flatiron
-How's this?
+
+1. Create Models
+2. Connect to API
+3. Create cards

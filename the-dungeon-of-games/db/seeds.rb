@@ -11,6 +11,8 @@ require 'pry'
 Category.destroy_all
 Game.destroy_all
 GameCategory.destroy_all
+User.destroy_all
+UserGame.destroy_all
 
 cat = RestClient.get 'https://api.boardgameatlas.com/api/game/categories?pretty=true&client_id=5IKZiDA8Yq'
 
@@ -52,5 +54,15 @@ game_array.each do |game|
        
     end 
 
-
 end 
+
+eddie = User.create(user_name: "Eddie")
+billy = User.create(user_name: "Billy")
+baller = User.create(user_name: "Baller")
+
+UserGame.create(user_id: eddie.id, game_id: Game.first.id)
+UserGame.create(user_id: billy.id, game_id: Game.first.id)
+
+Game.all.each do |game|
+    UserGame.create(user_id: baller.id, game_id: game.id)
+end
