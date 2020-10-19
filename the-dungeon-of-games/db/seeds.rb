@@ -36,9 +36,11 @@ game_array.each do |game|
         average_rating: game["average_user_rating"]
     )
 
-    game["categories"].each do |cat|
-        blah = Category.find_by(category_code: cat["id"])
-        if blah.id
+    codes = game["categories"].collect{|cat| cat["id"]}
+
+    codes.each do |code|
+        blah = Category.find_by(category_code: code)
+        if blah
             blah = blah.id
             game_id = Game.last.id
             #binding.pry
