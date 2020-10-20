@@ -19,11 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return input;
      };
 
+     function expandCard(){
+         console.log('we be expanding')
+     }
     function createGameCard(element){
         const mainDiv = document.querySelector("#toy-collection")
         console.log(element)
         const div = cEl('div')
         div.className = 'card'
+
+        div.addEventListener('click',(e) =>{
+            e.preventDefault
+            expandCard()
+        })
         const h1 = cEl('h1')
         h1.innerText = element.name
 
@@ -33,9 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ratingBtn = cEl('button')
         ratingBtn.innerText = "Add Rating"
+        ratingBtn.addEventListener('click',(e)=>{
+            e.preventDefault
+            addRating()
+        })
 
-        const h5= cEl('h5')
-        h5.innerHTML = truncate(element.description)
+        const h3= cEl('h3')
+        h3.innerHTML = truncate(element.description)
 
         const table = cEl('table')
 
@@ -43,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         outer.className = "stars-outer"
         const inner = cEl('div')
         inner.className = "stars-inner"
-
         
         let starPercent = `${(element.average_rating)*20}%`
         inner.style.width = starPercent
@@ -51,31 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
         outer.append(inner)
         table.append(outer)
 
-
-
-        // rating.innerText = Math.round(element.average_rating)
-
-        const price = cEl('h6')
+        const price = cEl('h4')
         price.innerText = element.price
 
         const buyBtn = cEl('a')
         buyBtn.href = element.purchase_url
         buyBtn.innerText = "Buy Me ;)"
 
-        div.append(h1, img, ratingBtn, h5, table, price, buyBtn)
+        div.append(h1, img, ratingBtn, h3, table, price, buyBtn)
         mainDiv.append(div)
     }
 
-/* <div>
-    <h1>
-        Title
-    </h1>
-    <img></img>
-    <button>goes to form to add star</button>
-    <h5>description</h5>
-    <p>rating</p>
-    <h6>price</h6>
-    <button> links to buy</button>
-</div> */
-
+    function addRating(){
+        console.log('we be rayteen')
+    }
+    
 })

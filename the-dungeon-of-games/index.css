@@ -49,6 +49,7 @@ body {
   .card {
     text-align: center;
     border: grey solid 1px;
+    background: rgb(173, 168, 168, .9);
     padding: 1rem;
     width: 25rem;
     height: 40rem;
