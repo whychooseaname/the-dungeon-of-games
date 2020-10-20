@@ -7,12 +7,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     fetch(gameUrl).then(res => res.json())
     .then(game => {
-        bestGames = game.slice(0, 10)
+        bestGames = game.slice(0, 9)
         bestGames.forEach(element => {
-            createGameCard(element)
+            createCarousel(element)
         });
     })
 
+    function createCarousel(game){
+        createGameCard(game, "#carousel")
+    }
+
+    fetch(gameUrl).then(res => res.json())
+    .then(game => {
+        restOfGames = game.slice(10)
+        restOfGames.forEach(element => {
+            createGameCard(element, "#toy-collection")
+        });
+    })
     function cEl(element){
         return document.createElement(element)
     }
@@ -24,14 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return input;
      };
 
-     function expandCard(){
-         console.log('we be expanding')
-     }
-    function createGameCard(element){
-        const mainDiv = document.querySelector("#toy-collection")
+    function createGameCard(element, argDiv){
+        const mainDiv = document.querySelector(argDiv)
         const bigDiv = cEl('div')
-        bigDiv.className = "flip-card"
-        // console.log(element)
+        if(argDiv == "#carousel"){
+            bigDiv.className = "flip-card carousel__cell"
+        } else {
+            bigDiv.className = "flip-card"
+        }
         const flip = cEl('div')
         flip.className = "flip-card-inner"
         const div = cEl('div')
@@ -40,20 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         backDiv.className = "flip-card-back"
         backDiv.innerHTML = `<h2>${element.name}</h2>${element.description}<h3>${element.number_of_ratings}</h3>`
 
-        // .flip-card:click .flip-card-inner{
-        //     transform: rotateY(180deg);
-        //   }
-
         flip.addEventListener( 'click', function() {
         flip.classList.toggle('is-flipped');
         });
-        
 
-        // flip.addEventListener('click',(e) =>{
-        //     e.preventDefault
-        //     bigDiv.style.transform = "rotateY(180deg)"
-        //     flip.style.transform = "rotateY(180deg)"
-        // })
         const h1 = cEl('h1')
         h1.innerText = element.name
 
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const buyBtn = cEl('div')
         buyBtn.className = "pumpkin-button"
         const i = cEl('i')
+        i.className = 'price'
         i.innerText = element.price
         const rest = cEl('div')
         rest.className = "rest"
@@ -105,5 +107,27 @@ document.addEventListener('DOMContentLoaded', () => {
     function addRating(){
         console.log('we be rayteen')
     }
-    
+    // --------------------------------------------
+    // Carousel Code
+  
+    var carousel = document.querySelector('.carousel');
+    var cellCount = 9;
+    var selectedIndex = 0;
+
+    function rotateCarousel() {
+    var angle = selectedIndex / cellCount * -360;
+    carousel.style.transform = 'translateZ(-288px) rotateY(' + angle + 'deg)';
+    }
+
+    var prevButton = document.querySelector('.previous-button');
+    prevButton.addEventListener( 'click', function() {
+    selectedIndex--;
+    rotateCarousel();
+    });
+
+    var nextButton = document.querySelector('.next-button');
+    nextButton.addEventListener( 'click', function() {
+    selectedIndex++;
+    rotateCarousel();
+    });
 })
