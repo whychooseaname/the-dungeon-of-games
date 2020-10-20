@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameUrl = 'http://localhost:3000/games'
+    const catUrl = 'http://localhost:3000/categories'
 
+    fetch(catUrl).then(res => res.json())
+    .then(console.log);
+    
     fetch(gameUrl).then(res => res.json())
     .then(game => {
-        game.forEach(element => {
+        bestGames = game.slice(0, 10)
+        bestGames.forEach(element => {
             createGameCard(element)
         });
     })
@@ -24,14 +29,31 @@ document.addEventListener('DOMContentLoaded', () => {
      }
     function createGameCard(element){
         const mainDiv = document.querySelector("#toy-collection")
-        console.log(element)
+        const bigDiv = cEl('div')
+        bigDiv.className = "flip-card"
+        // console.log(element)
+        const flip = cEl('div')
+        flip.className = "flip-card-inner"
         const div = cEl('div')
-        div.className = 'card'
+        div.classList.add('flip-card-front')
+        const backDiv = cEl('div')
+        backDiv.className = "flip-card-back"
+        backDiv.innerHTML = `<h2>${element.name}</h2>${element.description}<h3>${element.number_of_ratings}</h3>`
 
-        div.addEventListener('click',(e) =>{
-            e.preventDefault
-            expandCard()
-        })
+        // .flip-card:click .flip-card-inner{
+        //     transform: rotateY(180deg);
+        //   }
+
+        flip.addEventListener( 'click', function() {
+        flip.classList.toggle('is-flipped');
+        });
+        
+
+        // flip.addEventListener('click',(e) =>{
+        //     e.preventDefault
+        //     bigDiv.style.transform = "rotateY(180deg)"
+        //     flip.style.transform = "rotateY(180deg)"
+        // })
         const h1 = cEl('h1')
         h1.innerText = element.name
 
@@ -47,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         const h3= cEl('h3')
+        h3.className = "desc"
         h3.innerHTML = truncate(element.description)
 
         const table = cEl('table')
@@ -62,15 +85,21 @@ document.addEventListener('DOMContentLoaded', () => {
         outer.append(inner)
         table.append(outer)
 
-        const price = cEl('h4')
-        price.innerText = element.price
+        const buyBtn = cEl('div')
+        buyBtn.className = "pumpkin-button"
+        const i = cEl('i')
+        i.innerText = element.price
+        const rest = cEl('div')
+        rest.className = "rest"
+        buyBtn.append(i, rest)
+        buyBtn.addEventListener('click', (e)=>{
+            window.open(element.purchase_url)
+        })
 
-        const buyBtn = cEl('a')
-        buyBtn.href = element.purchase_url
-        buyBtn.innerText = "Buy Me ;)"
-
-        div.append(h1, img, ratingBtn, h3, table, price, buyBtn)
-        mainDiv.append(div)
+        div.append(h1, img, h3, table, ratingBtn, buyBtn)
+        flip.append(div, backDiv)
+        bigDiv.append(flip)
+        mainDiv.append(bigDiv)
     }
 
     function addRating(){
