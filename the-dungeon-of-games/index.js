@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ratingBtn.innerText = "Add Rating"
         ratingBtn.addEventListener('click',(e)=>{
             e.preventDefault
-            addRating()
+            addRating(backDiv)
         })
 
         const h3= cEl('h3')
@@ -104,8 +104,29 @@ document.addEventListener('DOMContentLoaded', () => {
         mainDiv.append(bigDiv)
     }
 
-    function addRating(){
+    function addRating(backDiv){
         console.log('we be rayteen')
+        console.log(backDiv)
+        const starDiv = cEl('div')
+        starDiv.className = "rate-us-bg"
+        starDiv.innerHTML = `<div class="rate-us-title">
+		<span class="rate-us-title-text">Rate Game </span>
+	</div>
+<div class="rate-us-star">
+  <form action="">
+		<input type="radio" id="rate-us-star-1" name="star" value="1" />
+  	<label for="rate-us-star-1"></label>
+	  <input type="radio" id="rate-us-star-2" name="star" value="2" />
+  	<label for="rate-us-star-2"></label>
+		<input type="radio" id="rate-us-star-3" name="star" value="3" />
+  	<label for="rate-us-star-3"></label>
+		<input type="radio" id="rate-us-star-4" name="star" value="4" />
+		<label for="rate-us-star-4"></label>
+		<input type="radio" id="rate-us-star-5" name="star" value="5" />
+		<label for="rate-us-star-5"></label>
+  	</form>
+    </div>`
+    backDiv.append(starDiv)
     }
     // --------------------------------------------
     // Carousel Code

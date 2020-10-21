@@ -296,3 +296,66 @@ body {
   .carousel__cell:nth-child(9) { transform: rotateY(320deg) translateZ(600px); }
 
 
+/* This is code for the star review death destroyer */
+
+.rate-us-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+.rate-us-title {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  top: 25px;
+}
+.rate-us-title-text {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+}
+.rate-us-star {
+  position: absolute;
+  width: 545px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.rate-us-star input {
+  border: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  opacity: 0;
+  float: inline-end;
+}
+.rate-us-star label {
+  background: url("https://appspowerplaymanager.vshcdn.net/images/biathlonmania/icons/icon-rate-us-star-inactive.png") no-repeat;
+  background-size: 50%;
+  height: 44px;
+  width: 44px;
+  display: inline-block;
+  /* margin: 15px 7.5px 0; */
+  /* float: inline-end; */
+  position: relative;
+}
+.rate-us-star label:before {
+  content: "";
+  background: url("https://appspowerplaymanager.vshcdn.net/images/biathlonmania/icons/icon-rate-us-star-active.png") no-repeat;
+  background-size: 50%;
+  display: inline-block;
+  user-select: none;
+}
+.rate-us-star input:checked ~ label:before, .rate-us-star label:hover ~ label:before, .rate-us-star label:hover:before {
+  height: 44px;
+  width: 44px;
+}
