@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const catUrl = 'http://localhost:3000/categories'
 
     fetch(catUrl).then(res => res.json())
-    .then(console.log);
     
     fetch(gameUrl).then(res => res.json())
     .then(game => {
@@ -35,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return input;
      };
 
+     function truncateBack(input){        
+         if (input.length > 1500) {
+            return input.substring(0, 1500) + '...';
+            }return input;}
+
     function createGameCard(element, argDiv){
         const mainDiv = document.querySelector(argDiv)
         const bigDiv = cEl('div')
@@ -49,10 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
         div.classList.add('flip-card-front')
         const backDiv = cEl('div')
         backDiv.className = "flip-card-back"
-        backDiv.innerHTML = `<h2>${element.name}</h2>${element.description}<h3>${element.number_of_ratings}</h3>`
+        backDiv.innerHTML = `<h2>${element.name}</h2>${truncateBack(element.description)}<h3>Number of Ratings: ${element.number_of_ratings}</h3>`
 
         flip.addEventListener( 'click', function() {
         flip.classList.toggle('is-flipped');
+        buyBtn.classList.toggle('pumpkin-hide');
+        table.classList.toggle('pumpkin-hide')
+        ratingBtn.classList.toggle('pumpkin-hide')
+
         });
 
         const h1 = cEl('h1')
@@ -105,29 +113,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addRating(backDiv){
-        console.log('we be rayteen')
-        console.log(backDiv)
         const starDiv = cEl('div')
         starDiv.className = "rate-us-bg"
         starDiv.innerHTML = `<div class="rate-us-title">
 		<span class="rate-us-title-text">Rate Game </span>
 	</div>
 <div class="rate-us-star">
-  <form action="">
-		<input type="radio" id="rate-us-star-1" name="star" value="1" />
+  <form action="" id="starForm" method="patch">
+		<input type="radio" id="rate-us-star-1" name="star" value="5" />
   	<label for="rate-us-star-1"></label>
-	  <input type="radio" id="rate-us-star-2" name="star" value="2" />
+	  <input type="radio" id="rate-us-star-2" name="star" value="4" />
   	<label for="rate-us-star-2"></label>
 		<input type="radio" id="rate-us-star-3" name="star" value="3" />
   	<label for="rate-us-star-3"></label>
-		<input type="radio" id="rate-us-star-4" name="star" value="4" />
+		<input type="radio" id="rate-us-star-4" name="star" value="2" />
 		<label for="rate-us-star-4"></label>
-		<input type="radio" id="rate-us-star-5" name="star" value="5" />
-		<label for="rate-us-star-5"></label>
+		<input type="radio" id="rate-us-star-5" name="star" value="1" />
+        <label for="rate-us-star-5"></label>
+        <button type="submit" id="user-submit" class="submit-btn">Submit</button>
   	</form>
     </div>`
     backDiv.append(starDiv)
+    starForm = document.querySelector("#starForm")
+    starForm.addEventListener("submit", e=>{
+        e.preventDefault()
+        console.log(e.target[5].value)
+        starForm.reset()
+    })
     }
+
     // --------------------------------------------
     // Carousel Code
   
