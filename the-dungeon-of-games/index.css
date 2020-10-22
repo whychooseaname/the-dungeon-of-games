@@ -140,7 +140,8 @@ body {
   
   .toy-collection {
     position: relative;
-    top: 1000px;
+    text-align: center;
+    top: 800px;
   }
   
   .card {

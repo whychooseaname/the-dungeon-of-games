@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameUrl = 'http://localhost:3000/games/'
     const catUrl = 'http://localhost:3000/categories/'
     const userUrl = 'http://localhost:3000/users/'
+    const userGameUrl = 'http://localhost:3000/user_games/'
     const catDiv = document.querySelector("#cat-collection")
     const allCats = document.querySelector("#all")
     const mainDiv = document.querySelector("#toy-collection")
+    const userDiv = document.querySelector("#user-collection")
     renderAll()
  
     //Carousel Render
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.id = cat.id
         a.addEventListener("click", (e)=>{
             mainDiv.innerHTML = ""
+            userDiv.innerHTML = ""
             catDiv.innerHTML = `<h1 style="color:white; font-size:80px; text-align:center">${cat.name}</h1>`
             fetch(catUrl + a.id).then(res=>res.json())
             .then(cat=>cat.games.forEach(game=>createGameCard(game, "#cat-collection")))
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allCats.addEventListener("click", (e)=>{
         catDiv.innerHTML = ""
+        userDiv.innerHTML = ""
         renderAll()
     })
 
@@ -74,7 +78,7 @@ function renderAll(){
         let num = element.number_of_ratings
         let rat = element.average_rating
         const ghost = cEl('img')
-        ghost.src = "https://files.slack.com/files-pri/T02MD9XTF-F01DB1M0TV2/ghost.png"
+        ghost.src = "./db/ghost.png"
         ghost.style="width:100px;height:100px"
         ghost.className = 'ghost'
         const mainDiv = document.querySelector(argDiv)
@@ -97,12 +101,38 @@ function renderAll(){
         buyBtn.classList.toggle('pumpkin-hide');
         table.classList.toggle('pumpkin-hide')
         ratingBtn.classList.toggle('pumpkin-hide')
-        ghost.classList.toggle('pumpkin-hide')
-        });
 
-        ghost.addEventListener('click', ()=>{
-            console.log("spoooooooooky")
-        })
+        
+        ghost.classList.toggle('pumpkin-hide')
+    });
+    if (argDiv == '#user-collection'){
+        ghost.addEventListener('click', (e)=>{
+            console.log(e)
+            fetch(userGameUrl, {
+            method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"},
+                body: JSON.stringify({
+                    game_id: element.id,
+                    user_id: 4
+                })          
+            })
+            alert('Game Removed From Your Collection!')
+            bigDiv.remove()
+        })} else{
+            ghost.addEventListener('click', ()=>{
+                fetch(userGameUrl, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"},
+                body: JSON.stringify({
+                    game_id: element.id,
+                    user_id: 4
+                })})
+                alert('Game Added to Your Collection!')
+        })}
 
         const h1 = cEl('h1')
         h1.innerText = element.name
@@ -152,7 +182,6 @@ function renderAll(){
         flip.append(div, backDiv)
         bigDiv.append(flip)
         mainDiv.append(bigDiv)
-        
         function addRating(backDiv){
             const starDiv = cEl('div')
             starDiv.className = "rate-us-bg"
@@ -209,6 +238,19 @@ function renderAll(){
         }
     }
         
+    // Button to see User's games
+
+    const userButton = document.querySelector("#userButton")
+    userButton.addEventListener('click',(e)=>{
+        mainDiv.innerHTML = ""
+        catDiv.innerHTML = ""
+        userDiv.innerHTML = `<h1 style="color:white; font-size:80px; text-align:center">Eddie's Games</h1>`
+        fetch(userUrl + '4').then(res=>res.json())
+        .then(user=>user.games.forEach(game=>createGameCard(game, "#user-collection")))
+    })
+
+
+
         // --------------------------------------------
     // Carousel Code
   
