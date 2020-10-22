@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameUrl = 'http://localhost:3000/games/'
     const catUrl = 'http://localhost:3000/categories/'
-
-    fetch(catUrl).then(res => res.json())
-    
+    const userUrl = 'http://localhost:3000/users/'
+    const catDiv = document.querySelector("#cat-collection")
+    const allCats = document.querySelector("#all")
+    const mainDiv = document.querySelector("#toy-collection")
+    renderAll()
+ 
+    //Carousel Render
     fetch(gameUrl).then(res => res.json())
     .then(game => {
         bestGames = game.slice(0, 9)
@@ -11,18 +15,45 @@ document.addEventListener('DOMContentLoaded', () => {
             createCarousel(element)
         });
     })
-
     function createCarousel(game){
         createGameCard(game, "#carousel")
     }
 
+//Categories
+    fetch(catUrl).then(res => res.json())
+    .then(cats=>cats.forEach(cat=>{
+        const a = cEl('a')
+        const drop = document.querySelector(".dropdown-content")
+        a.innerText = cat.name
+        a.href = "#"
+        a.id = cat.id
+        a.addEventListener("click", (e)=>{
+            mainDiv.innerHTML = ""
+            catDiv.innerHTML = `<h1 style="color:white; font-size:80px; text-align:center">${cat.name}</h1>`
+            fetch(catUrl + a.id).then(res=>res.json())
+            .then(cat=>cat.games.forEach(game=>createGameCard(game, "#cat-collection")))
+        })
+        drop.append(a)
+    }))
+
+    allCats.addEventListener("click", (e)=>{
+        catDiv.innerHTML = ""
+        renderAll()
+    })
+
+
+//All Games Render
+function renderAll(){
+    mainDiv.innerHTML = `<h1 style="color:white; font-size:80px; text-align:center">All Games</h1>`
     fetch(gameUrl).then(res => res.json())
     .then(game => {
         restOfGames = game.slice(10)
         restOfGames.forEach(element => {
             createGameCard(element, "#toy-collection")
         });
-    })
+    })}
+
+
     function cEl(element){
         return document.createElement(element)
     }
@@ -41,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createGameCard(element, argDiv){
         let num = element.number_of_ratings
+        const ghost = cEl('img')
+        ghost.src = "https://files.slack.com/files-pri/T02MD9XTF-F01DB1M0TV2/ghost.png"
+        ghost.style="width:100px;height:100px"
+        ghost.className = 'ghost'
         const mainDiv = document.querySelector(argDiv)
         const bigDiv = cEl('div')
         if(argDiv == "#carousel"){
@@ -61,8 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
         buyBtn.classList.toggle('pumpkin-hide');
         table.classList.toggle('pumpkin-hide')
         ratingBtn.classList.toggle('pumpkin-hide')
-
+        ghost.classList.toggle('pumpkin-hide')
         });
+
+        ghost.addEventListener('click', ()=>{
+            console.log("spoooooooooky")
+        })
 
         const h1 = cEl('h1')
         h1.innerText = element.name
@@ -99,7 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         buyBtn.className = "pumpkin-button"
         const i = cEl('i')
         i.className = 'price'
-        i.innerText = element.price
+        if(element.price == 0){i.innerText = "Click"}
+        else{i.innerText = element.price.toFixed(2)}
         const rest = cEl('div')
         rest.className = "rest"
         buyBtn.append(i, rest)
@@ -107,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.open(element.purchase_url)
         })
 
-        div.append(h1, img, h3, table, ratingBtn, buyBtn)
+        div.append(h1, img, h3, table, ratingBtn, buyBtn, ghost)
         flip.append(div, backDiv)
         bigDiv.append(flip)
         mainDiv.append(bigDiv)
