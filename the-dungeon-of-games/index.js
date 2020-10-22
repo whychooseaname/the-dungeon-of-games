@@ -72,6 +72,7 @@ function renderAll(){
 
     function createGameCard(element, argDiv){
         let num = element.number_of_ratings
+        let rat = element.average_rating
         const ghost = cEl('img')
         ghost.src = "https://files.slack.com/files-pri/T02MD9XTF-F01DB1M0TV2/ghost.png"
         ghost.style="width:100px;height:100px"
@@ -186,8 +187,10 @@ function renderAll(){
         }
 
         function patchReview(rating){
-            num++
-            const newRating = ((element.average_rating*element.number_of_ratings)+rating)/num
+            console.log(rat)
+            rat = ((rat*num)+rating)/(num-1)
+            console.log(rat)
+            ++num
             fetch(gameUrl + element.id, {
                 method: 'PATCH',
                 headers: {
@@ -195,7 +198,7 @@ function renderAll(){
                     "Accept": "application/json"},
                 body: JSON.stringify({
                     number_of_ratings: num,
-                    average_rating: newRating
+                    average_rating: rat
             })})
             .then(res => res.json())
             .then(game => {
