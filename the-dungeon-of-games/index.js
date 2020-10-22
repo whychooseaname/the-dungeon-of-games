@@ -134,12 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
   	</form>
     </div>`
     backDiv.append(starDiv)
-    starForm = document.querySelector("#starForm")
-    starForm.addEventListener("submit", e=>{
+    starForm = document.querySelector("#rate-us-star-5")
+    starForm.addEventListener("click", e=>{
         e.preventDefault()
-        console.log(e.target[5].value)
-        starForm.reset()
+        console.log(e.target.value)
+        // console.log(e.target[0].value)
+        // console.log(e.target[1].value)
+        // console.log(e.target[2].value)
+        // console.log(e.target[3].value)
+        // console.log(e.target[4].value)
+        
     })
+    starForm.reset()
     }
 
     // --------------------------------------------
