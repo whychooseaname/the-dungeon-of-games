@@ -206,20 +206,20 @@ body {
   
   button {
     position: relative;
-    background-color: rgba(226, 224, 224, 0.8);
-    border: none;
+    background-color:  rgba(240,100,0,1);
+    border:  black solid 1px;;
     border-radius: 5px;
     height: 3rem;
     width: max-content;
-    color: black;
+    color: white;
     font-size: 18px;
     justify-self: center;
   }
   
   button:hover {
-    background-color: black;
-    border: black solid 1px;
-    color: rgba(226, 224, 224);
+    background-color:white;
+    border:black solid 1px;
+    color:  rgba(240,100,0,1);
   }
   
   
@@ -385,11 +385,11 @@ body {
 
 /* drop down non sense */
 .dropbtn {
-  background-color: orange;
+  background-color: rgba(240,100,0,1);
   color: white;
   padding: 16px;
   font-size: 16px;
-  border: none;
+  border: black solid 1px;
   cursor: pointer;
 }
 
@@ -417,7 +417,7 @@ body {
 
 .dropdown-content a:hover {background-color: #f1f1f1;}
 .dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .dropbtn {background-color: orange;}
+.dropdown:hover .dropbtn {background-color: white; color: rgba(240,100,0,1);}
 
 .ghost{
   transform: translateX(140px) translateY(-70px);
@@ -553,4 +553,27 @@ body {
     text-shadow: none;
     transform: skewX(0);
   }
+}
+
+.ghost-container {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  visibility: hidden;
+}
+
+.ghost-scary {
+  z-index: 10;
+  display: block;
+  width: 1000px;
+  position: relative;
+  top: 300px;
+  margin: auto;
+}
+
+.cat-collection-span{
+  position: absolute;
+  color: white;
+  font-size: 1px;
+  top: 1900px;
 }

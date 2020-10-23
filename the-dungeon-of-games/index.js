@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = cEl('a')
         const drop = document.querySelector(".dropdown-content")
         a.innerText = cat.name
-        a.href = "#"
+        a.href = "#cat-collection-span"
         a.id = cat.id
         a.addEventListener("click", (e)=>{
             mainDiv.innerHTML = ""
@@ -210,6 +210,7 @@ function renderAll(){
                 buyBtn.classList.toggle('pumpkin-hide');
                 table.classList.toggle('pumpkin-hide')
                 ratingBtn.classList.toggle('pumpkin-hide')
+                ghost.classList.toggle('pumpkin-hide')
                 starForm.remove()
                 patchReview(rating)
             })
@@ -242,6 +243,21 @@ function renderAll(){
 
     const userButton = document.querySelector("#userButton")
     userButton.addEventListener('click',(e)=>{
+        var ghostScary = document.getElementsByClassName("ghost-container")[0];
+        var sound = new Audio("./db/file.wav");
+  
+        //Shows ghost and plays sound after five seconds
+        setTimeout(function () {
+          sound.load();
+          sound.play();
+          ghostScary.style.visibility = "visible";
+        }, 2000);
+  
+        //Hides ghost one second after appears
+        setTimeout(function () {
+          ghostScary.style.visibility = "hidden";
+        }, 4000);
+
         mainDiv.innerHTML = ""
         catDiv.innerHTML = ""
         userDiv.innerHTML = `<h1 style="color:white; font-size:80px; text-align:center">Eddie's Games</h1>`

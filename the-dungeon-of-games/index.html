@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>The Dungeon of Games</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.google.com/specimen/Creepster#standard-styles">
     <style>
     .checked {
     color: orange;
@@ -18,34 +17,35 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    
-    <div id='toy-header'>
-      <h1 class="horror-text">The Dungeon of Games</h1>
+    <div class="ghost-container">
+      <img class="ghost-scary" src="https://s3-prod.adage.com/s3fs-public/styles/width_1024/public/Nun3X2.jpg" alt="A picture of a scary ghost!">
     </div>
-    
+    <div id='toy-header'>
+      <h1 style=font-size:60px class='horror-text'>The Dungeon of Games</h1>
+    </div>
+
+    <div style="float:left;">
+      <button id= "userButton" class="dropbtn">Your Games</button>
+    </div>
     <div class="dropdown" style="float:right;">
       <button class="dropbtn">Popular Categories</button>
       <div class="dropdown-content">
         <a href="#" id="all">View All Games</a>
       </div>
     </div>
-    <div style="float:left;">
-      <button id= "userButton" class="dropbtn">Your Games</button>
-      
-    </div>
-    
     <h1 style="color:white; font-size:45px; text-align:center">Popular Games</h1>
   <center>
     <div id="scene" class = 'scene'>
       <div id = "carousel" class = 'carousel'>
       </div>
       <button class="previous-button">Previous</button>
-      <button class="next-button">Forward</button>
+      <button id="next-button" class="next-button">Forward</button>
     </div> 
   </center>
+  <h4 id="cat-collection-span" class="cat-collection-span">hi</h4>
     <div id="toy-collection" class="toy-collection"></div>
-
-    <div id="cat-collection" class="toy-collection"></div>
+    <div id="cat-collection" class="toy-collection">
+    </div>
     <div id="user-collection" class="toy-collection"></div>
 
 
